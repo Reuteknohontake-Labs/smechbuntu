@@ -24,6 +24,6 @@ lb binary
 } 2>&1 | tee build.log
 CODENAME=$(ubuntu-distro-info --devel)
 OUT="smechlinux-$(date +%Y%m%d)-${CODENAME}-amd64.iso"
-mv live-image-amd64.hybrid.iso "$OUT"
+mv smechlinux-amd64.hybrid.iso "$OUT"
 sha256sum "$OUT" > "$OUT.sha256"
 ls -l "$OUT"; cat "$OUT.sha256"

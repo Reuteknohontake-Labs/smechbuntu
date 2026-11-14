@@ -17,6 +17,7 @@ set_kv ID_LIKE "ubuntu debian"
 set_kv HOME_URL "https://github.com/Reuteknohontake-Labs/smechbuntu"
 set_kv SUPPORT_URL "https://github.com/Reuteknohontake-Labs/smechbuntu/issues"
 set_kv BUG_REPORT_URL "https://github.com/Reuteknohontake-Labs/smechbuntu/issues"
-sed -i '/^PRIVACY_POLICY_URL=/d' "$F"
+sed -i -e '/^PRIVACY_POLICY_URL=/d' -e '/^VENDOR_NAME=/d' -e '/^VENDOR_URL=/d' -e '/^LOGO=/d' -e '/^DOCUMENTATION_URL=/d' "$F"
+set_kv VERSION "$(sed -n 's/^VERSION="\(.*\)"/\1/p' "$F" | sed 's/ (.*//')"
 # keep VERSION_ID / VERSION_CODENAME / UBUNTU_CODENAME as shipped by Ubuntu
 test "$(readlink -f /etc/os-release)" = "$F" || ln -sf ../usr/lib/os-release /etc/os-release

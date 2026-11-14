@@ -22,3 +22,6 @@ config/includes.chroot_before_packages/etc/apt/keyrings/
 build.out
 config/package-lists/live.list.chroot
 chroot.*
+test/
+binary.modified_timestamps
+*.iso.sha256
