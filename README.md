@@ -1,0 +1,2 @@
+# smechbuntu
+This is SmechBuntu
