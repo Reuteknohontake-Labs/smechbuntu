@@ -27,3 +27,6 @@ OUT="smechlinux-$(date +%Y%m%d)-${CODENAME}-amd64.iso"
 mv smechlinux-amd64.hybrid.iso "$OUT"
 sha256sum "$OUT" > "$OUT.sha256"
 ls -l "$OUT"; cat "$OUT.sha256"
+SIZE=$(stat -c %s "$OUT")
+echo "ISO size: $SIZE bytes"
+[ "$SIZE" -lt 2147483648 ] || echo "WARNING: ISO is >= 2 GiB; GitHub release files must be under 2 GiB" >&2

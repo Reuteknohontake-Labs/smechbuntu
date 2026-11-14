@@ -28,6 +28,15 @@ curl -fsSL https://packages.mozilla.org/apt/repo-signing-key.gpg -o "$KEYDIR/pac
 gpg --show-keys --with-colons "$KEYDIR/packages.mozilla.org.asc" | grep -q "^fpr:::::::::$EXPECT:" \
   || { echo "ERROR: Mozilla key fingerprint mismatch"; exit 1; }
 
+# --- Kernel: linux-image-generic hard-depends on the full linux-firmware (~700 MiB), which pushes the ISO over GitHub's
+# 2 GiB release-file limit. Install the concrete kernel packages it points at, plus a chosen firmware subset
+# (see config/package-lists/smech.list.chroot). The installed system gets linux-image-generic + full firmware via Calamares.
+KVER_DEPS=$(curl -fsSL "http://archive.ubuntu.com/ubuntu/dists/$DEVEL/main/binary-amd64/Packages.xz" | xzcat \
+  | awk '$0=="Package: linux-image-generic"{f=1} f&&/^Depends:/{print; f=0}' | sed 's/^Depends: //' | tr ',' '\n' \
+  | sed 's/^ *//; s/ .*//' | grep -E '^linux-(image|modules)-[0-9]')
+[ -n "$KVER_DEPS" ] || { echo "ERROR: could not resolve kernel packages"; exit 1; }
+printf '%s\n' $KVER_DEPS > config/package-lists/kernel.list.chroot
+
 MIRROR=http://archive.ubuntu.com/ubuntu/
 lb config noauto \
   --mode debian \
@@ -44,7 +53,7 @@ lb config noauto \
   --security false --updates false --backports false \
   --debootstrap-options "--variant=minbase --keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg" \
   --apt-recommends false --apt-indices false --apt-secure true \
-  --linux-flavours generic --linux-packages "linux-image" \
+  --linux-flavours generic --linux-packages none \
   --firmware-chroot false --firmware-binary false \
   --initramfs live-boot --initsystem systemd \
   --bootloaders "syslinux,grub-efi" --binary-image iso-hybrid \

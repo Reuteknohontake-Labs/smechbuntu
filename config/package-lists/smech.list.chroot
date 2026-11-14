@@ -58,4 +58,18 @@ parted
 gdisk
 squashfs-tools
 cryptsetup
-linux-firmware
+# Firmware subset for common PC hardware. Dropped to stay under GitHub's 2 GiB release-file limit:
+# qualcomm-misc, qualcomm-graphics, mellanox-spectrum, marvell-prestera, marvell-wireless, qlogic, netronome.
+linux-firmware-amd-graphics
+linux-firmware-amd-misc
+linux-firmware-broadcom-wireless
+linux-firmware-intel-graphics
+linux-firmware-intel-misc
+linux-firmware-intel-wireless
+linux-firmware-mediatek
+linux-firmware-misc
+linux-firmware-nvidia-graphics
+linux-firmware-qualcomm-wireless
+linux-firmware-realtek
+intel-microcode
+amd64-microcode

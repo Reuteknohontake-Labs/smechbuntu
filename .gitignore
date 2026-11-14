@@ -26,3 +26,4 @@ test/
 binary.modified_timestamps
 *.iso.sha256
 release/
+config/package-lists/kernel.list.chroot
