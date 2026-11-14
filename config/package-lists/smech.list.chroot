@@ -58,3 +58,4 @@ parted
 gdisk
 squashfs-tools
 cryptsetup
+linux-firmware
