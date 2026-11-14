@@ -1,0 +1,13 @@
+#!/bin/sh
+# Build-time assertions; a failure aborts the build.
+set -e
+if dpkg-query -W -f='${Package}\n' | grep -E '^kubuntu'; then echo "ERROR: kubuntu package present"; exit 1; fi
+if dpkg-query -W -f='${Package}\n' | grep -E '^(ubiquity|snapd)'; then echo "ERROR: ubiquity/snapd present"; exit 1; fi
+dpkg -s sddm >/dev/null || { echo "ERROR: sddm missing"; exit 1; }
+# Firefox must come from Mozilla, not the Ubuntu snap stub
+apt-cache policy firefox | grep -q 'packages.mozilla.org' || { echo "ERROR: firefox not from mozilla"; exit 1; }
+test -x /usr/lib/firefox/firefox || test -x /usr/bin/firefox
+test -f /etc/calamares/settings.conf
+# Mozilla key fingerprint pinned at build time
+gpg --show-keys --with-colons /etc/apt/keyrings/packages.mozilla.org.asc 2>/dev/null | grep -q '35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3' || { echo "ERROR: mozilla key fingerprint mismatch"; exit 1; }
+grep -q '^ID=smechlinux$' /etc/os-release && grep -q '^ID_LIKE="ubuntu debian"$' /etc/os-release || { echo "ERROR: os-release not set"; exit 1; }

@@ -1,0 +1,12 @@
+#!/bin/sh
+# Display manager: SDDM (documented exception - Plasma Login Manager is not in the Ubuntu devel archive).
+set -e
+echo /usr/sbin/sddm > /etc/X11/default-display-manager
+mkdir -p /etc/systemd/system
+ln -sf /usr/lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
+systemctl enable sddm.service 2>/dev/null || true
+systemctl set-default graphical.target 2>/dev/null || true
+# Locale: US English
+sed -i 's/^# *en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+locale-gen
+update-locale LANG=en_US.UTF-8

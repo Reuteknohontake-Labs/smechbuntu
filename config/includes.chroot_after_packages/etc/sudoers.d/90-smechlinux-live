@@ -1,0 +1,2 @@
+# Live session only; removed from the installed system by Calamares.
+smech ALL=(ALL) NOPASSWD:ALL

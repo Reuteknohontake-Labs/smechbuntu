@@ -1,0 +1,22 @@
+#!/bin/sh
+# Identify as Smech Linux (derived from Ubuntu/Debian). /etc/os-release is a symlink to
+# /usr/lib/os-release; divert the packaged file so base-files upgrades don't overwrite ours.
+set -e
+F=/usr/lib/os-release
+if ! dpkg-divert --list "$F" | grep -q smechlinux; then
+  dpkg-divert --local --rename --divert "$F.distrib" --add "$F"
+fi
+cp "$F.distrib" "$F"
+set_kv() { # key value (value written quoted)
+  if grep -q "^$1=" "$F"; then sed -i "s|^$1=.*|$1=\"$2\"|" "$F"; else echo "$1=\"$2\"" >> "$F"; fi
+}
+set_kv NAME "Smech Linux"
+set_kv PRETTY_NAME "Smech Linux (Ubuntu devel)"
+sed -i 's|^ID=.*|ID=smechlinux|' "$F"
+set_kv ID_LIKE "ubuntu debian"
+set_kv HOME_URL "https://github.com/Reuteknohontake-Labs/smechbuntu"
+set_kv SUPPORT_URL "https://github.com/Reuteknohontake-Labs/smechbuntu/issues"
+set_kv BUG_REPORT_URL "https://github.com/Reuteknohontake-Labs/smechbuntu/issues"
+sed -i '/^PRIVACY_POLICY_URL=/d' "$F"
+# keep VERSION_ID / VERSION_CODENAME / UBUNTU_CODENAME as shipped by Ubuntu
+test "$(readlink -f /etc/os-release)" = "$F" || ln -sf ../usr/lib/os-release /etc/os-release

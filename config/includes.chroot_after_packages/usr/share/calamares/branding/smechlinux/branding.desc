@@ -1,0 +1,32 @@
+---
+componentName: smechlinux
+welcomeStyleCalamares: false
+welcomeExpandingLogo: true
+windowExpanding: normal
+windowSize: 800px,520px
+windowPlacement: center
+sidebar: widget
+navigation: widget
+strings:
+    productName:         Smech Linux
+    shortProductName:    Smech Linux
+    version:             devel
+    shortVersion:        devel
+    versionedName:       Smech Linux (Ubuntu devel)
+    shortVersionedName:  Smech Linux
+    bootloaderEntryName: Smech Linux
+    productUrl:          https://github.com/Reuteknohontake-Labs/smechbuntu
+    supportUrl:          https://github.com/Reuteknohontake-Labs/smechbuntu/issues
+    knownIssuesUrl:      https://github.com/Reuteknohontake-Labs/smechbuntu/issues
+    releaseNotesUrl:     https://github.com/Reuteknohontake-Labs/smechbuntu
+images:
+    productLogo:         "logo.png"
+    productIcon:         "logo.png"
+    productWelcome:      "welcome.png"
+style:
+   SidebarBackground:        "#1d2a35"
+   SidebarText:              "#ffffff"
+   SidebarTextCurrent:       "#1d2a35"
+   SidebarBackgroundCurrent: "#3daee9"
+slideshow:               "show.qml"
+slideshowAPI: 2

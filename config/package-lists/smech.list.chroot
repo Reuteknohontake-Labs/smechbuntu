@@ -1,0 +1,61 @@
+# Desktop (vanilla KDE; no kubuntu-*)
+kde-plasma-desktop
+kde-config-sddm
+sddm
+sddm-theme-breeze
+breeze
+breeze-icon-theme
+kscreen
+plasma-nm
+plasma-pa
+plasma-systemmonitor
+plasma-workspace-wallpapers
+xdg-desktop-portal-kde
+polkit-kde-agent-1
+kwin-x11
+xwayland
+kio-extras
+# Apps / utilities
+firefox
+konsole
+dolphin
+kate
+ark
+# Networking / audio
+network-manager
+pipewire
+pipewire-pulse
+wireplumber
+# Graphics / fonts
+libgl1-mesa-dri
+fonts-noto-core
+fonts-noto-color-emoji
+fonts-hack
+# System
+sudo
+locales
+console-setup
+keyboard-configuration
+dbus-user-session
+ca-certificates
+iproute2
+user-setup
+live-config
+live-config-systemd
+# Installer + what the installed system needs to boot
+calamares
+os-prober
+efibootmgr
+grub-efi-amd64-signed
+shim-signed
+grub-efi-amd64-bin
+grub-pc-bin
+grub2-common
+dosfstools
+e2fsprogs
+ntfs-3g
+parted
+gdisk
+squashfs-tools
+cryptsetup
+linux-firmware

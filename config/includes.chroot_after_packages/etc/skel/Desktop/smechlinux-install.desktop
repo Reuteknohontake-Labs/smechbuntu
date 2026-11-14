@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Install Smech Linux
+Comment=Install Smech Linux to disk
+Icon=calamares
+Exec=sudo -E calamares
+Terminal=false
+Categories=System;
