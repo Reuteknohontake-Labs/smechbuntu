@@ -25,3 +25,4 @@ chroot.*
 test/
 binary.modified_timestamps
 *.iso.sha256
+release/
