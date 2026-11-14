@@ -1,7 +1,7 @@
 #!/bin/sh
 # Display manager: SDDM (documented exception - Plasma Login Manager is not in the Ubuntu devel archive).
 set -e
-echo /usr/sbin/sddm > /etc/X11/default-display-manager
+echo /usr/bin/sddm > /etc/X11/default-display-manager   # sddm.service ExecStartPre requires exactly this path
 mkdir -p /etc/systemd/system
 ln -sf /usr/lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
 systemctl enable sddm.service 2>/dev/null || true
@@ -10,3 +10,7 @@ systemctl set-default graphical.target 2>/dev/null || true
 sed -i 's/^# *en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 update-locale LANG=en_US.UTF-8
+# live-config's own sddm step writes /etc/sddm.conf with an empty Session= for Plasma, overriding
+# /etc/sddm.conf.d. Mark it done so our drop-in (Session=plasma.desktop) is used. Removed again by Calamares.
+mkdir -p /var/lib/live/config
+touch /var/lib/live/config/sddm
