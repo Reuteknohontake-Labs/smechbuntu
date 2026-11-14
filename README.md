@@ -37,24 +37,19 @@ renames the result to `smechlinux-<date>-<codename>-amd64.iso` plus a `.sha256` 
 - **Calamares config is hand-written.** `calamares-settings-ubuntu-common` assumes casper and depends on
   `snapd-seed-glue`; `calamares-settings-kubuntu` depends on it.
 
-## Release and reassembly
+## Release
 
-GitHub caps each release file at 2 GiB and the ISO is about 2.3 GiB (it includes `linux-firmware` for
-drivers), so it is published as two files plus a SHA-256 file. Download all three, then:
-
-```bash
-./reassemble.sh            # files in the current directory
-./reassemble.sh <tag>      # or download them from release <tag> first
-```
-
-It joins the parts and checks the SHA-256.
+The ISO is 2,132,803,584 bytes, just under GitHub's 2 GiB release-file limit, so it ships as a single file with its
+SHA-256 (`sha256sum -c smechlinux-20261114-tenacious-amd64.iso.sha256`). To fit, the live image carries a firmware
+subset (AMD, Intel, NVIDIA, Realtek, MediaTek, Broadcom, Qualcomm Wi-Fi, misc) and the concrete kernel packages instead of
+`linux-image-generic` (which hard-depends on the full `linux-firmware`). Calamares installs `linux-image-generic` and the
+full `linux-firmware` on the installed system when it has network access. `build.sh` warns if the ISO reaches 2 GiB.
 
 ## Known issues
 
 - Boot-tested only in QEMU with software emulation (no KVM): UEFI GRUB menu, kernel/live-boot, SDDM autologin to
-  Plasma Wayland, and Firefox were confirmed on an earlier build; see the report for details.
+  Plasma Wayland, and Firefox were confirmed on the final build. Calamares starts and loads its welcome module; the full install was not run.
 - Plasma Login Manager is not in the archive yet, so SDDM is used.
-- The full Calamares install was not run; it is configured only.
 
 ## Live session
 

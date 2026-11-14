@@ -24,6 +24,6 @@ config/package-lists/live.list.chroot
 chroot.*
 test/
 binary.modified_timestamps
-*.iso.sha256
+
 release/
 config/package-lists/kernel.list.chroot

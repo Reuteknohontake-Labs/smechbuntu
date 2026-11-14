@@ -36,6 +36,7 @@ KVER_DEPS=$(curl -fsSL "http://archive.ubuntu.com/ubuntu/dists/$DEVEL/main/binar
   | sed 's/^ *//; s/ .*//' | grep -E '^linux-(image|modules)-[0-9]')
 [ -n "$KVER_DEPS" ] || { echo "ERROR: could not resolve kernel packages"; exit 1; }
 printf '%s\n' $KVER_DEPS > config/package-lists/kernel.list.chroot
+KFLAV=$(printf '%s\n' $KVER_DEPS | sed -n 's/^linux-image-//p' | head -1)   # e.g. 7.3.0-9-generic
 
 MIRROR=http://archive.ubuntu.com/ubuntu/
 lb config noauto \
@@ -53,7 +54,7 @@ lb config noauto \
   --security false --updates false --backports false \
   --debootstrap-options "--variant=minbase --keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg" \
   --apt-recommends false --apt-indices false --apt-secure true \
-  --linux-flavours generic --linux-packages none \
+  --linux-flavours "$KFLAV" --linux-packages "linux-image" \
   --firmware-chroot false --firmware-binary false \
   --initramfs live-boot --initsystem systemd \
   --bootloaders "syslinux,grub-efi" --binary-image iso-hybrid \
